@@ -13,18 +13,25 @@ equivale a 0 días 12 horas 1 minuto 40 segundos*/
 
 public class principal extends JFrame {
 
-   public principal() {
+   AccionBoton botonAct = new AccionBoton();
+
+   private JLabel titulo;
+   private JLabel segundos;
+   private JTextArea area;
+   private JButton convertir;
+   private Container contenedorPrincipal;
+
+    public principal() {
 
 
         super("conversion de tiempo");
 
-        Container contenedorPrincipal = this.getContentPane();
+        contenedorPrincipal = this.getContentPane();
 
         contenedorPrincipal.setLayout(new GridBagLayout());
         contenedorPrincipal.setBackground(Color.LIGHT_GRAY);
         GridBagConstraints restricciones = new GridBagConstraints();
-
-        JLabel titulo = new JLabel("introduzca la cantidad de segundos que desea convertir");
+        titulo = new JLabel("introduzca la cantidad de segundos que desea convertir");
        restricciones.gridx = 0;
        restricciones.gridy = 0;
        restricciones.gridwidth = 1;
@@ -35,7 +42,7 @@ public class principal extends JFrame {
        restricciones.anchor = GridBagConstraints.NORTHWEST;
        contenedorPrincipal.add(titulo, restricciones);
 
-       JLabel segundos = new JLabel("segundos:");
+       segundos = new JLabel("segundos:");
       restricciones.gridx = 0;
        restricciones.gridy = 1;
        restricciones.gridwidth = 1;
@@ -46,7 +53,7 @@ public class principal extends JFrame {
        restricciones.anchor = GridBagConstraints.NORTHWEST;
        contenedorPrincipal.add(segundos,restricciones);
 
-       JTextArea area = new JTextArea("          ");
+       area = new JTextArea("");
        restricciones.gridx = 1;
        restricciones.gridy = 1;
        restricciones.gridwidth = 2;
@@ -57,7 +64,7 @@ public class principal extends JFrame {
        restricciones.anchor = GridBagConstraints.NORTHWEST;
        contenedorPrincipal.add(area,restricciones);
 
-       JButton convertir = new JButton("convertir");
+       convertir = new JButton("convertir");
        restricciones.gridx = 3;
        restricciones.gridy = 1;
        restricciones.gridwidth = 2;
@@ -69,19 +76,7 @@ public class principal extends JFrame {
        contenedorPrincipal.add(convertir,restricciones);
 
 
-       convertir.addActionListener(new ActionListener(){
-           public void actionPerformed (ActionEvent e){
-
-              /* if (segundos.getText())
-               {
-                   if (segundos <1000){
-
-                   }
-               }*/
-
-               JOptionPane.showMessageDialog(contenedorPrincipal, "aqui sale tu conversion");
-           }
-       });
+       convertir.addActionListener(this.botonAct);
 
 
 
@@ -97,30 +92,37 @@ public class principal extends JFrame {
 
     }
 
-    /*class AccionBoton implements ActionListener{
+    class AccionBoton implements ActionListener{
 
         @Override
         //Método controlador del evento actionPerformed
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Presionaste un botón " + ((JButton) e.getSource()).getText());
-
-
 
 
                 if ( ((JButton) e.getSource()) == convertir) {
+                    int valorSegundos = Integer.parseInt(area.getText());
 
-                    if ((edtUsuario.getText().contentEquals("admin"))
-                            && edtClave.getText().contentEquals("1234")) {
-                        System.out.println("Acceso concedido");
+                    if (valorSegundos<=1000000)
+                    {
+                       int dia= valorSegundos/60/60/24;
+                       valorSegundos= valorSegundos-(dia*60*60*24);
 
+                       int hora= valorSegundos/60/60;
+                       valorSegundos=valorSegundos-(hora*60*60);
 
-                    } else System.out.println("Acceso denegado");
+                       int minuto= valorSegundos/60;
+                       valorSegundos=valorSegundos-(minuto*60);
+
+                       JOptionPane.showMessageDialog(contenedorPrincipal,"son: dias:"+dia+" horas:"+hora+" minutos:"+minuto+" segundos:"+valorSegundos);
+
+                    }
+
+                    else
+                        JOptionPane.showMessageDialog(contenedorPrincipal,"el valor maximo es 1000000, vuelve a intentar");
 
 
                 }
 
-
-
         }
-    }*/
+    }
 }
